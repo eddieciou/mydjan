@@ -1,9 +1,11 @@
 version: "3.9"
 services:
   pg:
-    image: postgres
+    image: postgres:11
     volumes:
       - ./data/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
