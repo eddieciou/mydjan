@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  pg:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+#  web:
+#    build: .
+#    command: python manage.py runserver 0.0.0.0:5000
+#    volumes:
+#    - .:/code
+#    ports:
+#    - "5000:5000"
+#    depends_on:
+#      - pg
