@@ -18,6 +18,7 @@ services:
   web:
     build: .
     command: sh /code/run_web.sh
+    working_dir: /code
     volumes:
     - .:/code
     ports:

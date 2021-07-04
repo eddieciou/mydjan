@@ -1,6 +1,8 @@
 FROM python:3.8-buster
 ENV PYTHONUNBUFFERED=1
-WORKDIR /code
-COPY requirements.txt /code/
-RUN pip install -r requirements.txt
-COPY . /code/
+
+RUN python3 -m venv /root/site
+
+COPY requirements.txt /root/requirements.txt
+RUN /root/site/bin/pip3 install --upgrade pip
+RUN /root/site/bin/pip3 install -r /root/requirements.txt

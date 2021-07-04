@@ -1,6 +1,6 @@
 
 # migrate db, so we have the latest db schema
-cd /code/ && python manage.py migrate
+cd /code/ && /root/site/bin/python manage.py migrate
 
 # run server
-cd /code/ && python manage.py runserver 0.0.0.0:5000
+cd /code/ && /root/site/bin/python manage.py runserver 0.0.0.0:5000
