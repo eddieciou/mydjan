@@ -17,7 +17,7 @@ services:
 
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:5000
+    command: sh /code/run_web.sh
     volumes:
     - .:/code
     ports:
