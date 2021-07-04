@@ -81,8 +81,7 @@ DATABASES = {
         'NAME': 'mydjan_db',
         'USER': 'postgres',
         'PASSWORD': '',
-        # 'HOST': 'pg',     # Host name in Docker
-        'HOST': 'localhost',
+        'HOST': 'pg',     # Host name in Docker
         'PORT': '5432'
     }
 }
