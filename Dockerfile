@@ -1,4 +1,4 @@
-FROM python:3.8-buster
+FROM python:3.8.1-slim-buster
 ENV PYTHONUNBUFFERED=1
 
 RUN python3 -m venv /root/site
