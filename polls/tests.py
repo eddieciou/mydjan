@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import Question
+from .models import Question, Choice
 
 
 class QuestionModelTests(TestCase):
@@ -29,12 +29,24 @@ class QuestionModelTests(TestCase):
         self.assertIs(future_question.was_published_recently(), False)
 
 
-def create_question(question_text, days):
+def create_question(question_text, days, have_choice=True):
     time = timezone.now() + datetime.timedelta(days=days)
-    return Question.objects.create(
+    question = Question.objects.create(
         question_text=question_text,
         pub_date=time
     )
+
+    if have_choice:
+        Choice.objects.create(
+            question=question,
+            choice_text='Default_choice_1'
+        )
+        Choice.objects.create(
+            question=question,
+            choice_text='Default_choice_2'
+        )
+
+    return question
 
 
 class QuestionIndexViewTests(TestCase):
@@ -70,6 +82,11 @@ class QuestionIndexViewTests(TestCase):
         response = self.client.get(reverse('polls:index'))
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(response.context['latest_question_list'], [question2, question1])
+
+    def test_have_not_choice_question(self):
+        create_question("Have not choice question", days=-1, have_choice=False)
+        response = self.client.get(reverse('polls:index'))
+        self.assertQuerysetEqual(response.context['latest_question_list'], [])
 
 
 class QuestionDetailViewTests(TestCase):
