@@ -113,3 +113,15 @@ class QuestionResultViewTests(TestCase):
         question = create_question("Future question", days=10)
         response = self.client.get(reverse('polls:results', args=(question.id,)))
         self.assertEqual(response.status_code, 404)
+
+
+class QuestionVoteViewTests(TestCase):
+    def test_vote(self):
+        question = create_question('Test vote', days=-1, have_choice=False)
+        choice = Choice.objects.create(
+            choice_text='Test vote',
+            question=question
+        )
+        self.client.post(reverse('polls:vote', args=(question.id,)), data={'choice': choice.id})
+        choice.refresh_from_db()
+        self.assertEqual(choice.votes, 1)
