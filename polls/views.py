@@ -4,8 +4,20 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Question, Choice
+from .serializers import QuestionSerializer
+
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.filter(
+        pub_date__lte=timezone.now(),
+        choice__isnull=False,
+    ).order_by('-pub_date').distinct()
+    serializer_class = QuestionSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class IndexView(generic.ListView):
